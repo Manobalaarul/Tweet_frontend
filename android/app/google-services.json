@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "507803724083",
+    "project_id": "tweet-f87b5",
+    "storage_bucket": "tweet-f87b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507803724083:android:45cd650bf54f9c23873646",
+        "android_client_info": {
+          "package_name": "com.manocodes.tweet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3YcIT7e6KqvFyzTTqmgJjvsDYlwURGuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
