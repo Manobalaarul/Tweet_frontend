@@ -9,11 +9,11 @@ class TweetRepo {
     try {
       Dio dio = Dio();
 
-      final response = await dio.get(Config.server_url + 'getAllTweets');
+      final response = await dio.get(Config.server_url + 'tweet/get/all');
       List<TweetModal> tweets = [];
       if (response.statusCode! >= 200 && response.statusCode! <= 300) {
-        for (int i = 0; i < response.data['data'].lenght; i++) {
-          tweets.add(TweetModal.fromMap(response.data['data']['i']));
+        for (int i = 0; i < response.data['data'].length; i++) {
+          tweets.add(TweetModal.fromMap(response.data['data'][i]));
         }
       }
       return tweets;

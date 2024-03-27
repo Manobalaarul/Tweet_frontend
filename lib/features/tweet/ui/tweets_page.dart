@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tweet/design/app_widgets.dart';
 import 'package:tweet/features/create_tweet/ui/create_tweet.dart';
 import 'package:tweet/features/tweet/bloc/tweet_bloc.dart';
+import 'package:intl/intl.dart';
 
 class TweetsPage extends StatefulWidget {
   const TweetsPage({super.key});
@@ -14,6 +15,12 @@ class TweetsPage extends StatefulWidget {
 class _TweetsPageState extends State<TweetsPage> {
   TweetBloc tweetBloc = TweetBloc();
   @override
+  void initState() {
+    tweetBloc.add(CreateTweetInitialFetchEvent());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Padding(
@@ -23,7 +30,7 @@ class _TweetsPageState extends State<TweetsPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateTweet(),
+                  builder: (context) => CreateTweet(tweetBloc: tweetBloc,),
                 ));
           },
           child: Icon(Icons.add),
@@ -42,13 +49,49 @@ class _TweetsPageState extends State<TweetsPage> {
               return Container(
                 margin: EdgeInsets.only(top: 60),
                 child: Column(
+                  
                   children: [
                     Center(child: AppLogoWidget()),
                     Expanded(
                         child: ListView.builder(
                       itemCount: successState.tweets.length,
                       itemBuilder: (context, index) {
-                        return Container();
+                        return Container(
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                successState.tweets[index].tweet.content,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w800),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Tweeted by : " +
+                                        successState
+                                            .tweets[index].admin.firstname +
+                                        " " +
+                                        successState
+                                            .tweets[index].admin.lastname,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(DateFormat("dd MMMM yyyy hh:mm a")
+                                      .format(successState
+                                          .tweets[index].tweet.createdAt)),
+                                ],
+                              )
+                            ],
+                          ),
+                        );
                       },
                     ))
                   ],
