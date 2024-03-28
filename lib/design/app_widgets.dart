@@ -9,21 +9,10 @@ class AppLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            child: Image.asset(
-              "assets/light_logo.png",
-            ),
-          ),
-          IconButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                SharedPreferencesManager.clearUser();
-              },
-              icon: Icon(Icons.logout))
-        ],
+      child: SizedBox(
+        child: Image.asset(
+          "assets/light_logo.png",
+        ),
       ),
     );
   }

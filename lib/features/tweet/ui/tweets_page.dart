@@ -30,7 +30,9 @@ class _TweetsPageState extends State<TweetsPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateTweet(tweetBloc: tweetBloc,),
+                  builder: (context) => CreateTweet(
+                    tweetBloc: tweetBloc,
+                  ),
                 ));
           },
           child: Icon(Icons.add),
@@ -47,9 +49,9 @@ class _TweetsPageState extends State<TweetsPage> {
             case TweetSuccessState:
               final successState = state as TweetSuccessState;
               return Container(
+                padding: EdgeInsets.all(8),
                 margin: EdgeInsets.only(top: 60),
                 child: Column(
-                  
                   children: [
                     Center(child: AppLogoWidget()),
                     Expanded(
@@ -57,7 +59,11 @@ class _TweetsPageState extends State<TweetsPage> {
                       itemCount: successState.tweets.length,
                       itemBuilder: (context, index) {
                         return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade800,
+                              borderRadius: BorderRadius.circular(10)),
                           padding: EdgeInsets.all(16),
+                          margin: EdgeInsets.all(8),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

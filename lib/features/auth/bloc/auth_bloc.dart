@@ -37,6 +37,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(AuthErrorState(error: "Wrong Password"));
           }
         }
+        break;
       case AuthType.register:
         try {
           credential =

@@ -16,11 +16,11 @@ class DecidePage extends StatefulWidget {
 class _DecidePageState extends State<DecidePage> {
   @override
   void initState() {
-    getUid();
+    getUser();
     super.initState();
   }
 
-  getUid() async {
+  getUser() async {
     String uid = await SharedPreferencesManager.getUid();
     log(uid);
     if (uid.isEmpty) {
