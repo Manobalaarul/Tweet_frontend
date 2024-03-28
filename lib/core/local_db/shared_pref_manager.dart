@@ -16,4 +16,8 @@ class SharedPreferencesManager {
   static String getUid() {
     return _prefs.getString('uid') ?? "";
   }
+
+  static clearUser() {
+    return _prefs.clear();
+  }
 }
