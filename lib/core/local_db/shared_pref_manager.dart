@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesManager {
@@ -9,15 +10,16 @@ class SharedPreferencesManager {
 
   static SharedPreferences get instance => _prefs;
 
+  // save token
   static Future<void> saveUid(String uid) async {
     await _prefs.setString('uid', uid);
   }
 
   static String getUid() {
-    return _prefs.getString('uid') ?? "";
+    return _prefs.getString('uid') ?? '';
   }
 
-  static clearUser() {
+  static Future<bool> clearUser() {
     return _prefs.clear();
   }
 }

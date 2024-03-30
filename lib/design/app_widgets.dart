@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tweet/core/local_db/shared_pref_manager.dart';
+import 'package:tweet/features/onboarding/ui/onboarding_screen.dart';
 
 class AppLogoWidget extends StatelessWidget {
   const AppLogoWidget({super.key});
@@ -9,10 +10,23 @@ class AppLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SizedBox(
-        child: Image.asset(
-          "assets/light_logo.png",
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            child: Image.asset(
+              "assets/light_logo.png",
+            ),
+          ),
+          IconButton(
+              onPressed: () async {
+                await SharedPreferencesManager.clearUser();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => OnBoardingScreen()),
+                    (route) => false);
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
     );
   }

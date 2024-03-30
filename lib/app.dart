@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:tweet/core/local_db/shared_pref_manager.dart';
 import 'package:tweet/features/onboarding/ui/onboarding_screen.dart';
@@ -16,15 +17,15 @@ class DecidePage extends StatefulWidget {
 class _DecidePageState extends State<DecidePage> {
   @override
   void initState() {
-    getUser();
+    getUid();
     super.initState();
   }
 
-  getUser() async {
+  getUid() async {
     String uid = await SharedPreferencesManager.getUid();
     log(uid);
     if (uid.isEmpty) {
-      DecidePage.authStream.add("");
+      DecidePage.authStream.add(null);
     } else {
       DecidePage.authStream.add(uid);
     }
@@ -33,16 +34,16 @@ class _DecidePageState extends State<DecidePage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String?>(
-      stream: DecidePage.authStream.stream,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return TweetsPage();
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          return OnBoardingScreen();
-        }
-      },
-    );
+        stream: DecidePage.authStream.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print(snapshot.toString());
+            return TweetsPage();
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return OnBoardingScreen();
+          }
+        });
   }
 }
