@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:tweet/design/app_widgets.dart';
 import 'package:tweet/features/auth/bloc/auth_bloc.dart';
+import 'package:tweet/features/tweet/ui/tweets_page.dart';
 
 class AuthRegisterScreeen extends StatefulWidget {
   const AuthRegisterScreeen({super.key});
@@ -34,7 +36,9 @@ class _AuthRegisterScreeenState extends State<AuthRegisterScreeen> {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
           } else if (state is AuthSuccessState) {
-            Navigator.popUntil(context, (route) => route.isFirst);
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => TweetsPage()),
+                (route) => false);
           }
         },
         builder: (context, state) {
@@ -122,6 +126,24 @@ class _AuthRegisterScreeenState extends State<AuthRegisterScreeen> {
                         ),
                       )
                     ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Center(
+                    child: Container(
+                      width: double.maxFinite,
+                      child: SignInButton(
+                        Buttons.Google,
+                        padding: EdgeInsets.all(8),
+                        onPressed: () {
+                          authBloc.add(AuthenticationEvent(
+                              authType: AuthType.google,
+                              email: '',
+                              password: ''));
+                        },
+                      ),
+                    ),
                   )
                 ],
               ),

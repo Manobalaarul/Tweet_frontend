@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tweet/core/local_db/shared_pref_manager.dart';
+import 'package:tweet/features/auth/repos/auth_repo.dart';
 import 'package:tweet/features/onboarding/ui/onboarding_screen.dart';
 
 class AppLogoWidget extends StatelessWidget {
@@ -21,6 +22,7 @@ class AppLogoWidget extends StatelessWidget {
           IconButton(
               onPressed: () async {
                 await SharedPreferencesManager.clearUser();
+                AuthRepo.signOut();
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => OnBoardingScreen()),
                     (route) => false);

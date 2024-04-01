@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tweet/core/config.dart';
 import 'package:tweet/features/auth/modals/user_modal.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthRepo {
   static Future<UserModal?> getUserRepo(String uid) async {
@@ -29,6 +31,43 @@ class AuthRepo {
       return true;
     } else {
       return false;
+    }
+  }
+
+  static Future<UserCredential?> signWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      print(userCredential.user?.displayName);
+      print(userCredential.user?.email);
+      print(userCredential.user?.uid);
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  static Future<void> signOut() async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    try {
+      await _auth.signOut();
+      await _googleSignIn.disconnect();
+      await _googleSignIn.currentUser?.clearAuthCache();
+    } catch (error) {
+      print('error: $error');
     }
   }
 }

@@ -48,59 +48,65 @@ class _TweetsPageState extends State<TweetsPage> {
           switch (state.runtimeType) {
             case TweetSuccessState:
               final successState = state as TweetSuccessState;
-              return Container(
-                padding: EdgeInsets.all(8),
-                margin: EdgeInsets.only(top: 60),
-                child: Column(
-                  children: [
-                    Center(child: AppLogoWidget()),
-                    Expanded(
-                        child: ListView.builder(
-                      itemCount: successState.tweets.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade800,
-                              borderRadius: BorderRadius.circular(10)),
-                          padding: EdgeInsets.all(16),
-                          margin: EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                successState.tweets[index].tweet.content,
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w800),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Tweeted by : " +
-                                        successState
-                                            .tweets[index].admin.firstname +
-                                        " " +
-                                        successState
-                                            .tweets[index].admin.lastname,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  Text(DateFormat("dd MMMM yyyy hh:mm a")
-                                      .format(successState
-                                          .tweets[index].tweet.createdAt)),
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ))
-                  ],
+              return RefreshIndicator(
+                onRefresh: () async {
+                  tweetBloc.add(CreateTweetInitialFetchEvent());
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  margin: EdgeInsets.only(top: 60),
+                  child: Column(
+                    children: [
+                      Center(child: AppLogoWidget()),
+                      Expanded(
+                          child: ListView.builder(
+                        itemCount: successState.tweets.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade800,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.all(16),
+                            margin: EdgeInsets.all(8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  successState.tweets[index].tweet.content,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Tweeted by : " +
+                                          successState
+                                              .tweets[index].admin.firstname +
+                                          " " +
+                                          successState
+                                              .tweets[index].admin.lastname,
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    Text(DateFormat("dd MMMM yyyy hh:mm a")
+                                        .format(successState
+                                            .tweets[index].tweet.createdAt)),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ))
+                    ],
+                  ),
                 ),
               );
             case TweetLoadState:
