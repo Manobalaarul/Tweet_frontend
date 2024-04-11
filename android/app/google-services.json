@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "507803724083-fhgelnql1gu10hhp8hr9sedihssl0a41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.manocodes.tweet",
+            "certificate_hash": "b3093282d9b47d54bd07fbaa45f08eed4189b274"
+          }
+        },
+        {
           "client_id": "507803724083-utjnr8vgc86sjpnuvd5ad622j44g27k6.apps.googleusercontent.com",
           "client_type": 3
         }

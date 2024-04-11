@@ -35,46 +35,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Image.asset(AppImages.img1),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'SECURED BACKUP',
-                    style: pageTitleStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Keep your files in closed safe so you can\'t lose them. Consider TrueNAS.',
-                    style: pageInfoStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Keep your files in closed safe so you can\'t lose them. Consider TrueNAS.',
-                    style: pageInfoStyle,
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Keep your files in closed safe so you can\'t lose them. Consider TrueNAS.',
-                    style: pageInfoStyle,
-                    textAlign: TextAlign.left,
-                  ),
+                child: Text(
+                  'Tweet App',
+                  style: pageTitleStyle,
+                  textAlign: TextAlign.center,
                 ),
               ),
               const Padding(

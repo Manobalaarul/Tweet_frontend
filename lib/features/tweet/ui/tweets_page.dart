@@ -4,6 +4,7 @@ import 'package:tweet/design/app_widgets.dart';
 import 'package:tweet/features/create_tweet/ui/create_tweet.dart';
 import 'package:tweet/features/tweet/bloc/tweet_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:tweet/features/update_tweet/ui/update_tweet.dart';
 
 class TweetsPage extends StatefulWidget {
   const TweetsPage({super.key});
@@ -22,6 +23,10 @@ class _TweetsPageState extends State<TweetsPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    // ignore: unused_local_variable
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: 10),
@@ -68,39 +73,118 @@ class _TweetsPageState extends State<TweetsPage> {
                                 borderRadius: BorderRadius.circular(10)),
                             padding: EdgeInsets.all(16),
                             margin: EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  successState.tweets[index].tweet.content,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w800),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Tweeted by : " +
-                                          successState
-                                              .tweets[index].admin.firstname +
-                                          " " +
-                                          successState
-                                              .tweets[index].admin.lastname,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    Text(DateFormat("dd MMMM yyyy hh:mm a")
-                                        .format(successState
-                                            .tweets[index].tweet.createdAt)),
-                                  ],
-                                )
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    showDragHandle: true,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20))),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding: EdgeInsets.all(8),
+                                        height: height / 4.5,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Actions',
+                                              style: TextStyle(
+                                                  fontSize: 23,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                print('Edit');
+                                                Navigator.pop(context);
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          UpdateTweet(
+                                                        tweetBloc: tweetBloc,
+                                                        tweet: successState
+                                                            .tweets[index]
+                                                            .tweet
+                                                            .content,
+                                                        tweetId: successState
+                                                            .tweets[index]
+                                                            .tweet
+                                                            .tweetId,
+                                                      ),
+                                                    ));
+                                              },
+                                              title: Text(
+                                                'Edit',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              trailing: Icon(Icons.edit),
+                                            ),
+                                            SizedBox(
+                                              height: height / 70,
+                                            ),
+                                            ListTile(
+                                              onTap: () {
+                                                print('Delete');
+                                                tweetBloc.add(DeleteTweetEvent(
+                                                    tweetId: successState
+                                                        .tweets[index]
+                                                        .tweet
+                                                        .tweetId));
+                                                Navigator.pop(context);
+                                              },
+                                              title: Text(
+                                                'Delete',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              trailing: Icon(Icons.delete),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    successState.tweets[index].tweet.content,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        successState
+                                                .tweets[index].admin.firstname +
+                                            " " +
+                                            successState
+                                                .tweets[index].admin.lastname,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      Text(DateFormat("dd MMMM yyyy hh:mm a")
+                                          .format(successState
+                                              .tweets[index].tweet.createdAt)),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },

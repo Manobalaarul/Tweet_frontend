@@ -22,4 +22,16 @@ class TweetRepo {
       return [];
     }
   }
+
+  static Future<void> deleteTweet(String tweetId) async {
+    try {
+      Dio dio = Dio();
+      final response = await dio.delete(Config.server_url + 'tweet/$tweetId');
+      if (response.statusCode! >= 200 && response.statusCode! <= 300) {
+        print('Tweet Deleted');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 }

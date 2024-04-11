@@ -75,21 +75,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
     if (credential != null) {
       if (event.authType == AuthType.login) {
+        emit(AuthLoadingState());
         UserModal? userModal =
             await AuthRepo.getUserRepo(credential.user?.uid ?? "");
         if (userModal != null) {
           await SharedPreferencesManager.saveUid(credential.user?.uid ?? "");
           DecidePage.authStream.add(credential.user?.uid ?? "");
+
           emit(AuthSuccessState());
         } else {
           emit(AuthErrorState(error: "Something went wrong"));
         }
       } else if (event.authType == AuthType.register) {
+        emit(AuthLoadingState());
         bool success = await AuthRepo.createUserRepo(UserModal(
             uid: credential.user?.uid ?? "",
             tweets: [],
-            firstname: "Mano",
-            lastname: "Bala",
+            firstname: event.firstname,
+            lastname: event.lastname,
             email: event.email,
             createdAt: DateTime.now().toString()));
         if (success) {
@@ -100,6 +103,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthErrorState(error: "Something went wrong"));
         }
       } else if (event.authType == AuthType.google) {
+        emit(AuthLoadingState());
         UserModal? userModal =
             await AuthRepo.getUserRepo(credential.user?.uid ?? "");
         if (userModal != null) {
@@ -107,6 +111,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           DecidePage.authStream.add(credential.user?.uid ?? "");
           emit(AuthSuccessState());
         } else {
+          emit(AuthLoadingState());
           bool success1 = await AuthRepo.createUserRepo(UserModal(
               uid: credential.user?.uid ?? "",
               tweets: [],
