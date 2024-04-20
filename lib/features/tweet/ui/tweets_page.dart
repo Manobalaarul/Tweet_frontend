@@ -58,8 +58,8 @@ class _TweetsPageState extends State<TweetsPage> {
                   tweetBloc.add(CreateTweetInitialFetchEvent());
                 },
                 child: Container(
-                  padding: EdgeInsets.all(8),
-                  margin: EdgeInsets.only(top: 60),
+                  // padding: EdgeInsets.all(8),
+                  // margin: EdgeInsets.only(top: 60),
                   child: Column(
                     children: [
                       Center(child: AppLogoWidget()),
